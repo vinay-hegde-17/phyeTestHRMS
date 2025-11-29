@@ -1,2 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"failed","Sat Nov 29 11:38:41 UTC 2025","Sat Nov 29 11:40:00 UTC 2025","78956","tests","test_login","","","","test_hrms_login","Test successful login with valid credentials from JSON"
+"passed","Sat Nov 29 11:46:37 UTC 2025","Sat Nov 29 11:47:56 UTC 2025","78630","tests","test_login","","","","test_hrms_login","Test successful login with valid credentials from JSON"
