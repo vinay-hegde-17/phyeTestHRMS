@@ -24,7 +24,7 @@ def test_homepage_url(driver, base_url):
         actions.open_home(base_url)
 
     with allure.step("Validate correct home URL is loaded"):
-        expected_url = "http://www.phyelements.com/"
+        expected_url = "http://phyelements.com/"
         current_url = actions.get_home_url()
 
         assert current_url == expected_url, f"Expected {expected_url}, but got {current_url}"
