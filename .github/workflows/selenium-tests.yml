@@ -7,6 +7,11 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -35,10 +40,29 @@ jobs:
           google-chrome --version
           which google-chrome
 
+      - name: Setup display for Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+          sleep 3
+
       - name: Run Pytest
         run: |
+          export DISPLAY=:99
           pytest tests/test_login.py -v --alluredir=allure-results
         continue-on-error: false
+
+      - name: Upload Screenshots on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-screenshots
+          path: |
+            *.png
+            screenshots/
+          retention-days: 7
 
       - name: Upload Allure Results
         if: always()
