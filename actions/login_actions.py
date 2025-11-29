@@ -86,15 +86,19 @@ class LoginActions:
             time.sleep(3)
             
             current_url = self.driver.current_url
+            page_title = self.driver.title
             print(f"Final URL: {current_url}")
-            print(f"Page title: {self.driver.title}")
+            print(f"Page title: {page_title}")
             
-            is_logged_in = "phyelements.com" in current_url and "login" not in current_url
+            is_logged_in = (
+                "phye HRMS Portal" in page_title and 
+                "phyelements.com" in current_url
+            )
             
             if is_logged_in:
-                print("✓ Login successful")
+                print("✓ Login successful - HRMS Portal loaded")
             else:
-                print("✗ Login failed - still on login page")
+                print("✗ Login failed")
                 self.driver.save_screenshot("login_failed.png")
                 print(f"Page source preview: {self.driver.page_source[:500]}")
             
