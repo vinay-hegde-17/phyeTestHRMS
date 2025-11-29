@@ -62,15 +62,27 @@ class LoginActions:
 
             print("Step 7: Switching back to main window...")
             time.sleep(3)
-            try:
-                if len(self.page.driver.window_handles) > 1:
-                    self.page.driver.switch_to.window(self.page.driver.window_handles[0])
-                else:
-                    self.page.driver.switch_to.window(self.page.driver.window_handles[0])
-                print(f"Active window handles: {len(self.page.driver.window_handles)}")
-            except Exception as e:
-                print(f"Window switch error: {e}")
             
+            all_handles = self.page.driver.window_handles
+            print(f"Total window handles: {len(all_handles)}")
+            
+            main_window = all_handles[0]
+            self.page.driver.switch_to.window(main_window)
+            print(f"Switched to main window: {main_window}")
+            
+            time.sleep(2)
+            if len(self.page.driver.window_handles) > 1:
+                print("Closing popup windows...")
+                for handle in self.page.driver.window_handles[1:]:
+                    try:
+                        self.page.driver.switch_to.window(handle)
+                        self.page.driver.close()
+                        print(f"Closed popup window: {handle}")
+                    except:
+                        pass
+                self.page.driver.switch_to.window(main_window)
+            
+            print(f"Final window handles count: {len(self.page.driver.window_handles)}")
             time.sleep(3)
             
             current_url = self.driver.current_url
